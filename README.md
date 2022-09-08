@@ -1,6 +1,6 @@
 # Android Project 1 - *Wordle*
 
-Submitted by: **Your Name Here**
+Submitted by: **Lillian Ho**
 
 **Name of your app** is an android app that recreates a simple version of the popular word game [Wordle](https://www.nytimes.com/games/wordle/index.html). 
 
