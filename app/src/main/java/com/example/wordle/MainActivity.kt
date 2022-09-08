@@ -37,39 +37,54 @@ class MainActivity : AppCompatActivity() {
         guessButton.setOnClickListener {
             val editText = findViewById<EditText>(R.id.guessedWordInput)
             val guessedWord = editText.text.toString().uppercase()
-            counter += 1;
 
-            var result = checkGuess(guessedWord)
-            if (counter > 3) {
-                Toast.makeText(it.context, "You have exceeded the maximum number of guesses!", Toast.LENGTH_SHORT).show()
-                guessButton.isEnabled = false
-                guessButton.isClickable = false
-            } else if (counter == 1) {
-                guess1input.text = guessedWord
-                guess1result.text = result
-                guess1.visibility = View.VISIBLE
-                guess1input.visibility = View.VISIBLE
-                guess1check.visibility = View.VISIBLE
-                guess1result.visibility = View.VISIBLE
-            } else if (counter == 2) {
-                guess2input.text = guessedWord
-                guess2result.text = result
-                guess2.visibility = View.VISIBLE
-                guess2input.visibility = View.VISIBLE
-                guess2check.visibility = View.VISIBLE
-                guess2result.visibility = View.VISIBLE
+            // Check if the guessed word is a valid (guessed word is 4 letters long and contains only letters)
+            if (guessedWord.length != 4 || !lettersCheck(guessedWord)) {
+                Toast.makeText(
+                    it.context,
+                    "Invalid guess. Guess with a word that has 4 letters!",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
-                guess3input.text = guessedWord
-                guess3result.text = result
-                guess3.visibility = View.VISIBLE
-                guess3input.visibility = View.VISIBLE
-                guess3check.visibility = View.VISIBLE
-                guess3result.visibility = View.VISIBLE
-                answer.visibility = View.VISIBLE
-            }
+                counter += 1;
+                var result = checkGuess(guessedWord)
 
-            if (guessedWord == wordToGuess) {
-                answer.visibility = View.VISIBLE
+                if (counter > 3) {
+                    Toast.makeText(
+                        it.context,
+                        "You have exceeded the maximum number of guesses!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    // Prevents users from making another guess
+                    guessButton.isEnabled = false
+                    guessButton.isClickable = false
+                } else if (counter == 1) {
+                    guess1input.text = guessedWord
+                    guess1result.text = result
+                    guess1.visibility = View.VISIBLE
+                    guess1input.visibility = View.VISIBLE
+                    guess1check.visibility = View.VISIBLE
+                    guess1result.visibility = View.VISIBLE
+                } else if (counter == 2) {
+                    guess2input.text = guessedWord
+                    guess2result.text = result
+                    guess2.visibility = View.VISIBLE
+                    guess2input.visibility = View.VISIBLE
+                    guess2check.visibility = View.VISIBLE
+                    guess2result.visibility = View.VISIBLE
+                } else {
+                    guess3input.text = guessedWord
+                    guess3result.text = result
+                    guess3.visibility = View.VISIBLE
+                    guess3input.visibility = View.VISIBLE
+                    guess3check.visibility = View.VISIBLE
+                    guess3result.visibility = View.VISIBLE
+                    answer.visibility = View.VISIBLE
+                }
+
+                if (guessedWord == wordToGuess) {
+                    answer.visibility = View.VISIBLE
+                }
             }
         }
     }
@@ -84,19 +99,31 @@ class MainActivity : AppCompatActivity() {
      *   '+' represents the right letter in the wrong place
      *   'X' represents a letter not in the target word
      */
-    private fun checkGuess(guess: String) : String {
+    private fun checkGuess(guess: String): String {
         var result = ""
         for (i in 0..3) {
             if (guess[i] == wordToGuess[i]) {
                 result += "O"
-            }
-            else if (guess[i] in wordToGuess) {
+            } else if (guess[i] in wordToGuess) {
                 result += "+"
-            }
-            else {
+            } else {
                 result += "X"
             }
         }
         return result
+    }
+
+    /**
+     * Parameter / Field:
+     *   guess : String - what the user entered as their guess
+     *
+     * Returns a Boolean where:
+     *   true if all characters in the guessed word are letters
+     *   false if the guessed word contains character(s) that are not letters
+     */
+    private fun lettersCheck(guess: String): Boolean {
+        return guess.all {
+            it.isLetter()
+        }
     }
 }
