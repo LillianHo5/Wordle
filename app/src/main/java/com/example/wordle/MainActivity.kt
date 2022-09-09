@@ -71,6 +71,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         guessButton.setOnClickListener {
+            // Hides Android soft keyboard after clicking on "Guess!" button
+            it.hideKeyboard()
+
             val editText = findViewById<EditText>(R.id.guessedWordInput)
             val guessedWord = editText.text.toString().uppercase()
 
@@ -193,5 +196,13 @@ class MainActivity : AppCompatActivity() {
         return guess.all {
             it.isLetter()
         }
+    }
+
+    /**
+     * Hides Android soft keyboard
+     */
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 }
