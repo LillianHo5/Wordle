@@ -1,7 +1,11 @@
 package com.example.wordle
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -38,14 +42,16 @@ class MainActivity : AppCompatActivity() {
             val editText = findViewById<EditText>(R.id.guessedWordInput)
             val guessedWord = editText.text.toString().uppercase()
 
-            // Check if the guessed word is a valid (guessed word is 4 letters long and contains only letters)
+            // Check if the guessed word is a valid input (guessed word is 4 letters long and contains only letters)
             if (guessedWord.length != 4 || !lettersCheck(guessedWord)) {
                 Toast.makeText(
                     it.context,
                     "Invalid guess. Guess with a word that has 4 letters!",
                     Toast.LENGTH_SHORT
                 ).show()
-            } else {
+            }
+            // guessed word is a valid input
+            else {
                 counter += 1;
                 var result = checkGuess(guessedWord)
 
@@ -94,20 +100,35 @@ class MainActivity : AppCompatActivity() {
      *   wordToGuess : String - the target word the user is trying to guess
      *   guess : String - what the user entered as their guess
      *
-     * Returns a String of 'O', '+', and 'X', where:
-     *   'O' represents the right letter in the right place
-     *   '+' represents the right letter in the wrong place
-     *   'X' represents a letter not in the target word
+     * Returns a String of the guessed word where:
+     *   green represents the right letter in the right place
+     *   yellow represents the right letter in the wrong place
+     *   red represents a letter not in the target word
      */
-    private fun checkGuess(guess: String): String {
-        var result = ""
+    private fun checkGuess(guess: String): SpannableString {
+        val result = SpannableString(guess)
         for (i in 0..3) {
             if (guess[i] == wordToGuess[i]) {
-                result += "O"
+                result.setSpan(
+                    ForegroundColorSpan(Color.GREEN),
+                    i,
+                    i + 1,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
             } else if (guess[i] in wordToGuess) {
-                result += "+"
+                result.setSpan(
+                    ForegroundColorSpan(resources.getColor(R.color.road_sign_yellow)),
+                    i,
+                    i + 1,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
             } else {
-                result += "X"
+                result.setSpan(
+                    ForegroundColorSpan(Color.RED),
+                    i,
+                    i + 1,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
             }
         }
         return result
