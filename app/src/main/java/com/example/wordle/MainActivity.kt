@@ -1,5 +1,6 @@
 package com.example.wordle
 
+import android.content.Context
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -82,7 +84,7 @@ class MainActivity : AppCompatActivity() {
             }
             // Guessed word is a valid input
             else {
-                counter += 1;
+                counter += 1
                 var result = checkGuess(guessedWord)
                 Log.i("TAG", counter.toString())
                 if (counter > 3) {
@@ -134,6 +136,8 @@ class MainActivity : AppCompatActivity() {
                         guessButton.visibility = View.VISIBLE
                     }
                 }
+                // Clears EditText after guess is made
+                editText.text.clear()
             }
         }
     }
