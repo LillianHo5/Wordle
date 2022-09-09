@@ -11,7 +11,7 @@
         android:layout_width="194dp"
         android:layout_height="54dp"
         android:gravity="center"
-        android:text="Hi!"
+        android:text="ANSWER"
         android:textSize="50dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -29,7 +29,7 @@
         android:hint="@string/guess_hint_message"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintEnd_toStartOf="@+id/guess_btn"
         app:layout_constraintHorizontal_bias="0.43"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/answer"
@@ -219,6 +219,31 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guess3" />
+
+    <TextView
+        android:id="@+id/streak_count"
+        android:layout_width="224dp"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:textSize="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/streakView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guess3check"
+        app:layout_constraintVertical_bias="0.842" />
+
+    <TextView
+        android:id="@+id/streakView"
+        android:layout_width="203dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="28dp"
+        android:gravity="center"
+        android:text="Current Streak"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/answer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

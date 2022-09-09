@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -14,7 +15,8 @@ import android.widget.Toast
 import com.example.wordle.FourLetterWordList.getRandomFourLetterWord
 
 class MainActivity : AppCompatActivity() {
-    private var counter = 0;
+    private var counter = 0
+    private var streak = 0
     private var wordToGuess = getRandomFourLetterWord()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,8 +36,11 @@ class MainActivity : AppCompatActivity() {
         val guess3check = findViewById<TextView>(R.id.guess3check)
         val guess3result = findViewById<TextView>(R.id.guess3result)
 
+        val streakCount = findViewById<TextView>(R.id.streak_count)
+        streakCount.text = streak.toString()
         val guessButton = findViewById<Button>(R.id.guess_btn)
         val resetButton = findViewById<Button>(R.id.reset_btn)
+
         val answer = findViewById<TextView>(R.id.answer)
         answer.text = wordToGuess
 
@@ -79,7 +84,7 @@ class MainActivity : AppCompatActivity() {
             else {
                 counter += 1;
                 var result = checkGuess(guessedWord)
-
+                Log.i("TAG", counter.toString())
                 if (counter > 3) {
                     Toast.makeText(
                         it.context,
@@ -112,8 +117,13 @@ class MainActivity : AppCompatActivity() {
                     guess3result.visibility = View.VISIBLE
                 }
 
-                // Checks if user guessed the correct word within their three tries
+                // Checks if user guessed the correct word within their three tries or if all three tries were used
                 if (counter == 3 || guessedWord == wordToGuess) {
+                    // Add to streak to keep count of how many words were guessed correctly in one sitting
+                    if (guessedWord == wordToGuess) {
+                        streak += 1
+                        streakCount.text = streak.toString()
+                    }
                     answer.visibility = View.VISIBLE
 
                     guessButton.visibility = View.INVISIBLE
