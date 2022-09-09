@@ -4,7 +4,7 @@ Submitted by: **Lillian Ho**
 
 **Wordle** is an android app that recreates a simple version of the popular word game [Wordle](https://www.nytimes.com/games/wordle/index.html). 
 
-Time spent: **7** hours spent in total
+Time spent: **8** hours spent in total
 
 ## Required Features
 
@@ -26,8 +26,8 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-* [ ] Clear EditText field after user makes a guess
-* [ ] Hide Android keyboard after user makes a guess 
+* [x] Clear EditText field after user makes a guess
+* [x] Hide Android keyboard after user makes a guess 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
