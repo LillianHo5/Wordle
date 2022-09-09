@@ -15,7 +15,7 @@ import com.example.wordle.FourLetterWordList.getRandomFourLetterWord
 
 class MainActivity : AppCompatActivity() {
     private var counter = 0;
-    private val wordToGuess = getRandomFourLetterWord()
+    private var wordToGuess = getRandomFourLetterWord()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,9 +34,34 @@ class MainActivity : AppCompatActivity() {
         val guess3check = findViewById<TextView>(R.id.guess3check)
         val guess3result = findViewById<TextView>(R.id.guess3result)
 
+        val guessButton = findViewById<Button>(R.id.guess_btn)
+        val resetButton = findViewById<Button>(R.id.reset_btn)
         val answer = findViewById<TextView>(R.id.answer)
         answer.text = wordToGuess
-        val guessButton = findViewById<Button>(R.id.button)
+
+        /**
+         * Resets TextViews to original visibility, resets counter, and chooses a new four letter word
+         * for the user to guess in order to allow users to play a new round of Wordle.
+         */
+        fun reset() {
+            guess1.visibility = View.INVISIBLE
+            guess1input.visibility = View.INVISIBLE
+            guess1check.visibility = View.INVISIBLE
+            guess1result.visibility = View.INVISIBLE
+            guess2.visibility = View.INVISIBLE
+            guess2input.visibility = View.INVISIBLE
+            guess2check.visibility = View.INVISIBLE
+            guess2result.visibility = View.INVISIBLE
+            guess3.visibility = View.INVISIBLE
+            guess3input.visibility = View.INVISIBLE
+            guess3check.visibility = View.INVISIBLE
+            guess3result.visibility = View.INVISIBLE
+            answer.visibility = View.INVISIBLE
+            counter = 0
+
+            wordToGuess = getRandomFourLetterWord()
+            answer.text = wordToGuess
+        }
 
         guessButton.setOnClickListener {
             val editText = findViewById<EditText>(R.id.guessedWordInput)
@@ -50,7 +75,7 @@ class MainActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-            // guessed word is a valid input
+            // Guessed word is a valid input
             else {
                 counter += 1;
                 var result = checkGuess(guessedWord)
@@ -85,11 +110,19 @@ class MainActivity : AppCompatActivity() {
                     guess3input.visibility = View.VISIBLE
                     guess3check.visibility = View.VISIBLE
                     guess3result.visibility = View.VISIBLE
-                    answer.visibility = View.VISIBLE
                 }
 
-                if (guessedWord == wordToGuess) {
+                // Checks if user guessed the correct word within their three tries
+                if (counter == 3 || guessedWord == wordToGuess) {
                     answer.visibility = View.VISIBLE
+
+                    guessButton.visibility = View.INVISIBLE
+                    resetButton.visibility = View.VISIBLE
+                    resetButton.setOnClickListener {
+                        reset()
+                        resetButton.visibility = View.INVISIBLE
+                        guessButton.visibility = View.VISIBLE
+                    }
                 }
             }
         }
