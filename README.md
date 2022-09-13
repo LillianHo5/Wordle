@@ -17,9 +17,9 @@ The following **required** functionality is completed:
 
 The following **optional** features are implemented:
 
-- [ ] User can toggle betweeen different word lists
+- [x] User can toggle betweeen different word lists
 - [x] User can see the 'correctness' of their guess through colors on the word 
-- [ ] User sees a visual change after guessing the correct word
+- [x] User sees a visual change after guessing the correct word (confetti)
 - [x] User can tap a 'Reset' button to get a new word and clear previous guesses
 - [x] User will get an error message if they input an invalid guess
 - [x] User can see a 'streak' record of how many words they've guessed correctly.
@@ -28,11 +28,13 @@ The following **additional** features are implemented:
 
 * [x] Clear EditText field after user makes a guess
 * [x] Hide Android keyboard after user makes a guess 
+* [x] Confetti disappears once user clicks the reset button to start a new game
+
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://g.recordit.co/cp5QEPazTc.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://g.recordit.co/eDzOC3ANFB.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 <!-- Replace this with whatever GIF tool you used! -->
 GIF created with Recordit 
