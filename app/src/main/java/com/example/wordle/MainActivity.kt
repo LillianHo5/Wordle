@@ -22,7 +22,7 @@ import com.github.jinatonic.confetti.ConfettiManager
 
 class MainActivity : AppCompatActivity() {
     var confetti: ConfettiManager? = null
-    var useStandard = true; // determines whether or not to toggle to standard or animal word list
+    var useStandard = true // determines whether or not to toggle to standard or animal word list
     private var counter = 0
     private var streak = 0
     private var wordToGuess = getRandomFourLetterWord(useStandard)
@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // TextViews used to display the user's guesses and checks
         val guess1 = findViewById<TextView>(R.id.guess1)
         val guess1input = findViewById<TextView>(R.id.guess1input)
         val guess1check = findViewById<TextView>(R.id.guess1check)
@@ -43,18 +44,18 @@ class MainActivity : AppCompatActivity() {
         val guess3input = findViewById<TextView>(R.id.guess3input)
         val guess3check = findViewById<TextView>(R.id.guess3check)
         val guess3result = findViewById<TextView>(R.id.guess3result)
-        val parent = findViewById<TextView>(R.id.guess1).parent
 
+        val parent = findViewById<TextView>(R.id.guess1).parent
+        // Streak display
         val streakCount = findViewById<TextView>(R.id.streak_count)
         streakCount.text = streak.toString()
+        // Buttons used in application, including guess, reset, and toggle to switch lists
         val guessButton = findViewById<Button>(R.id.guess_btn)
         val resetButton = findViewById<Button>(R.id.reset_btn)
         val toggleButton = findViewById<Button>(R.id.toggleNewList_btn)
 
         val answer = findViewById<TextView>(R.id.answer)
         answer.text = wordToGuess
-
-        Log.i("TEST: starting wordToGuess", wordToGuess)
 
         /**
          * Resets TextViews to original visibility, resets counter, and chooses a new four letter word
@@ -77,6 +78,7 @@ class MainActivity : AppCompatActivity() {
             answer.visibility = View.INVISIBLE
             counter = 0
 
+            // Grabs a new word for the user to guess
             wordToGuess = getRandomFourLetterWord(useStandard)
             answer.text = wordToGuess
         }
@@ -99,8 +101,9 @@ class MainActivity : AppCompatActivity() {
             // Guessed word is a valid input
             else {
                 counter += 1
-                var result = checkGuess(guessedWord)
+                val result = checkGuess(guessedWord)
                 Log.i("TAG", counter.toString())
+                // Make TextViews visible depending on which guess the user is in
                 if (counter == 1) {
                     guess1input.text = guessedWord
                     guess1result.text = result
@@ -155,17 +158,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // Change word list used when toggle button is clicked
         toggleButton.setOnClickListener {
             if(useStandard) {
                 useStandard = false;
                 toggleButton.text = "Basic words"
                 reset()
-                Log.i("TEST: current wordToGuess", wordToGuess)
             } else {
                 useStandard = true;
                 toggleButton.text = "Animal words"
                 reset()
-                Log.i("TEST: current wordToGuess", wordToGuess)
             }
             resetButton.visibility = View.INVISIBLE
             guessButton.visibility = View.VISIBLE
