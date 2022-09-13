@@ -9,15 +9,20 @@ import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
+import android.view.ViewParent
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.example.wordle.FourLetterWordList.getRandomFourLetterWord
+import com.github.jinatonic.confetti.CommonConfetti
+import com.github.jinatonic.confetti.ConfettiManager
 
 class MainActivity : AppCompatActivity() {
-    var useStandard = true;
+    var confetti: ConfettiManager? = null
+    var useStandard = true; // determines whether or not to toggle to standard or animal word list
     private var counter = 0
     private var streak = 0
     private var wordToGuess = getRandomFourLetterWord(useStandard)
@@ -38,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         val guess3input = findViewById<TextView>(R.id.guess3input)
         val guess3check = findViewById<TextView>(R.id.guess3check)
         val guess3result = findViewById<TextView>(R.id.guess3result)
+        val parent = findViewById<TextView>(R.id.guess1).parent
 
         val streakCount = findViewById<TextView>(R.id.streak_count)
         streakCount.text = streak.toString()
@@ -48,11 +54,14 @@ class MainActivity : AppCompatActivity() {
         val answer = findViewById<TextView>(R.id.answer)
         answer.text = wordToGuess
 
+        Log.i("TEST: starting wordToGuess", wordToGuess)
+
         /**
          * Resets TextViews to original visibility, resets counter, and chooses a new four letter word
          * for the user to guess in order to allow users to play a new round of Wordle.
          */
         fun reset() {
+            confetti?.terminate()
             guess1.visibility = View.INVISIBLE
             guess1input.visibility = View.INVISIBLE
             guess1check.visibility = View.INVISIBLE
@@ -92,16 +101,7 @@ class MainActivity : AppCompatActivity() {
                 counter += 1
                 var result = checkGuess(guessedWord)
                 Log.i("TAG", counter.toString())
-                if (counter > 3) {
-                    Toast.makeText(
-                        it.context,
-                        "You have exceeded the maximum number of guesses!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    // Prevents users from making another guess
-                    guessButton.isEnabled = false
-                    guessButton.isClickable = false
-                } else if (counter == 1) {
+                if (counter == 1) {
                     guess1input.text = guessedWord
                     guess1result.text = result
                     guess1.visibility = View.VISIBLE
@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity() {
                     guess2input.visibility = View.VISIBLE
                     guess2check.visibility = View.VISIBLE
                     guess2result.visibility = View.VISIBLE
-                } else {
+                } else if (counter == 3){
                     guess3input.text = guessedWord
                     guess3result.text = result
                     guess3.visibility = View.VISIBLE
@@ -130,6 +130,15 @@ class MainActivity : AppCompatActivity() {
                     if (guessedWord == wordToGuess) {
                         streak += 1
                         streakCount.text = streak.toString()
+                        Toast.makeText(
+                            it.context,
+                            "Great job!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        confetti = CommonConfetti.rainingConfetti(parent as ViewGroup?,
+                            intArrayOf(resources.getColor(R.color.sea_foam_green), resources.getColor(R.color.dark_sky_blue),
+                                resources.getColor(R.color.ceil), resources.getColor(R.color.light_orange),
+                                resources.getColor(R.color.metallic_pink))).stream(10000)
                     }
                     answer.visibility = View.VISIBLE
 
@@ -158,6 +167,8 @@ class MainActivity : AppCompatActivity() {
                 reset()
                 Log.i("TEST: current wordToGuess", wordToGuess)
             }
+            resetButton.visibility = View.INVISIBLE
+            guessButton.visibility = View.VISIBLE
         }
     }
 

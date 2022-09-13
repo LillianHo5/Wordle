@@ -9,4 +9,14 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#FF0000</color>
     <color name="road_sign_yellow">#FDDA16</color>
+    <color name="light_purple">#EBE8FC</color>
+    <color name="pastel_yellow">#F8EFD8</color>
+    <color name="pastel_red">#F2BFBF</color>
+    <color name="pastel_blue">#CBDAE1</color>
+    <color name="pastel_pink">#F3E2E8</color>
+    <color name="sea_foam_green">#A9DBC7</color>
+    <color name="ceil">#89C5D3</color>
+    <color name="dark_sky_blue">#8C9DCF</color>
+    <color name="metallic_pink">#E8ACBD</color>
+    <color name="light_orange">#FEDBB2</color>
 </resources>
