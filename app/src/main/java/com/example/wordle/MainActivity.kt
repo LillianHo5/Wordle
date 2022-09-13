@@ -17,9 +17,10 @@ import android.widget.Toast
 import com.example.wordle.FourLetterWordList.getRandomFourLetterWord
 
 class MainActivity : AppCompatActivity() {
+    var useStandard = true;
     private var counter = 0
     private var streak = 0
-    private var wordToGuess = getRandomFourLetterWord()
+    private var wordToGuess = getRandomFourLetterWord(useStandard)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         streakCount.text = streak.toString()
         val guessButton = findViewById<Button>(R.id.guess_btn)
         val resetButton = findViewById<Button>(R.id.reset_btn)
+        val toggleButton = findViewById<Button>(R.id.toggleNewList_btn)
 
         val answer = findViewById<TextView>(R.id.answer)
         answer.text = wordToGuess
@@ -66,7 +68,7 @@ class MainActivity : AppCompatActivity() {
             answer.visibility = View.INVISIBLE
             counter = 0
 
-            wordToGuess = getRandomFourLetterWord()
+            wordToGuess = getRandomFourLetterWord(useStandard)
             answer.text = wordToGuess
         }
 
@@ -141,6 +143,20 @@ class MainActivity : AppCompatActivity() {
                 }
                 // Clears EditText after guess is made
                 editText.text.clear()
+            }
+        }
+
+        toggleButton.setOnClickListener {
+            if(useStandard) {
+                useStandard = false;
+                toggleButton.text = "Basic words"
+                reset()
+                Log.i("TEST: current wordToGuess", wordToGuess)
+            } else {
+                useStandard = true;
+                toggleButton.text = "Animal words"
+                reset()
+                Log.i("TEST: current wordToGuess", wordToGuess)
             }
         }
     }
